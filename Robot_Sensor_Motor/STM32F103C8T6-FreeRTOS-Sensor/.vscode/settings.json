@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+        "*.a51": "8051",
+        "*.C": "c",
+        "task.h": "c",
+        "led.h": "c",
+        "freertos.h": "c",
+        "freertosconfig.h": "c",
+        "portable.h": "c",
+        "oled.h": "c",
+        "sys.h": "c",
+        "stm32f10x.h": "c",
+        "wexti.h": "c",
+        "list.h": "c",
+        "timer.h": "c",
+        "delay.h": "c",
+        "cstdio": "c",
+        "usart.h": "c",
+        "semphr.h": "c",
+        "l298n.h": "c"
+    }
+}
