@@ -23,13 +23,13 @@ static TaskHandle_t Task2_Handle = NULL; /* Task2_Handle 任务句柄 */
 
 static TaskHandle_t Task3_Handle = NULL; /* Task3_Handle 任务句柄 */
 
-static TaskHandle_t Task4_Handle = NULL; /* Task4_Handle 任务句柄 */
+// static TaskHandle_t Task4_Handle = NULL; /* Task4_Handle 任务句柄 */
 
-static TaskHandle_t Task5_Handle = NULL; /* Task5_Handle 任务句柄 */
+// static TaskHandle_t Task5_Handle = NULL; /* Task5_Handle 任务句柄 */
 
 //QueueHandle_t MPU6050_Queue_Hnadle=NULL;/*创建MPU6050 传感器的 队列*/
 
-SemaphoreHandle_t Binary_Semaphore=NULL; /*二值信号量 句柄*/
+// SemaphoreHandle_t Binary_Semaphore=NULL; /*二值信号量 句柄*/
 
 /**************************** 任务句柄 ********************************/
 
@@ -107,8 +107,8 @@ void HardWare_Init(void)
 int Start_Task(void)
 {
 
-    Binary_Semaphore= xSemaphoreCreateBinary();
-    if(Binary_Semaphore==NULL) configASSERT( 0 );/*==NULL 二值信号量创建失败*/
+    // Binary_Semaphore= xSemaphoreCreateBinary();
+    // if(Binary_Semaphore==NULL) configASSERT( 0 );/*==NULL 二值信号量创建失败*/
   
    // MPU6050_Queue_Hnadle= xQueueCreate( 3, 4 ); /*队列长度3 队列单元大小4Byte*/
     //if(MPU6050_Queue_Hnadle ==NULL ) configASSERT( 0 ); /*如果产生的队列 为NULL  则创建失败 报错*/
@@ -352,9 +352,8 @@ void Task_1( void * pvParameters )
 void Task_2( void * pvParameters )
 {
 
-    BaseType_t can_rx_data=5;    
     char CAN_Rxbuf[8]={0}; 
-	char can_rx_lenth=0; 
+	u8 can_rx_lenth=0; 
 
     while(1)
     {
@@ -468,93 +467,6 @@ void Task_3( void * pvParameters )
 }
 
 
-
-
-
-//char pcWriteBuffer[500];
-
-/**
- * @brief Task_4  Check Task sate
- * 
- * @param pvParameters 
- */
-void Task_4( void * pvParameters )
-{   
-
-            #if 0
-        //wheels_RL(1,1); //控制电机的正转 反转
-       // TIM_SetCompare1(TIM3, ((uint16_t)Rx_Data)*10);//CH1_PA6 RR  幅值：1000   Rx_Data
-	    //TIM_SetCompare2(TIM3, ((uint16_t)Rx_Data)*10);//CH2_PA7 LL 幅值：1000
-        #endif
-/*
-    UBaseType_t task_all_number= uxTaskGetNumberOfTasks();
-    TaskStatus_t *statue_arr =pvPortMalloc( sizeof(TaskStatus_t) * task_all_number );
-
-    UBaseType_t task_num= uxTaskGetSystemState(statue_arr,task_all_number,NULL);
-
-    printf("任务名\t\t任务优先级\t任务编号\r\n");
-    for (size_t i = 0; i < task_num; i++)
-    {
-        printf("%s\t\t%ld\t%ld\r\n",
-                statue_arr[i].pcTaskName,
-                statue_arr[i].uxCurrentPriority,
-                statue_arr[i].xTaskNumber
-        );
-    }
-
-    TaskHandle_t xTask= xTaskGetHandle("Task_1");
-
-    TaskStatus_t* status_arr2=pvPortMalloc( sizeof(TaskStatus_t) );
-
-    vTaskGetInfo( xTask,status_arr2,pdTRUE,eInvalid);
-
-    printf("任务名: %s \r\n",status_arr2->pcTaskName);
-    printf("任务优先级: %d \r\n",status_arr2->uxCurrentPriority);
-    printf("任务编号: %d \r\n",status_arr2->xTaskNumber);
-    printf("任务状态: %d \r\n",status_arr2->eCurrentState);
-    
-    UBaseType_t task_stack = uxTaskGetStackHighWaterMark(xTask);
-    printf("Task_stack %d \r\n",task_stack);
-*/     
-
-    //vTaskList(pcWriteBuffer);
-
-   // printf("%s\n",pcWriteBuffer);
-
-   // vTaskGetRunTimeStats(pcWriteBuffer); 
-   // printf("%s\n",pcWriteBuffer);
-
-
-
-    while(1)
-    {
-        
-
-        //printf("\tTask4 Hello World! \r\n");
-        vTaskDelay(500); //延时 1s，也就是 1000 个时钟节拍
-    }
-
-}
-
-
-/**
- * @brief Task_5 
- * 
- * @param pvParameters 
- */
-void Task_5( void * pvParameters )
-{   
-    while(1)
-    {
-        #if 1
- 
-        #endif
-
-
-        vTaskDelay(5); //延时 1s，也就是 1000 个时钟节拍
-    }
-
-}
 
 
 
