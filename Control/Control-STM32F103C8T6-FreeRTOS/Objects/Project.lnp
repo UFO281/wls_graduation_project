@@ -39,7 +39,6 @@
 ".\objects\l298n.o"
 ".\objects\24l01.o"
 ".\objects\spi.o"
-".\objects\dht11.o"
 ".\objects\lcd.o"
 ".\objects\lcd_init.o"
 ".\objects\wadc.o"

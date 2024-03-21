@@ -14,13 +14,6 @@
 
 
 
-//-----------------------全局变量定义----------------
-
-
-//-----------------------全局变量定义----------------
-
-
-
 
 
 /**************************** 任务句柄 ********************************/
@@ -36,17 +29,17 @@ static TaskHandle_t Task0_Handle = NULL; /* Task0_Handle 任务句柄 */
 
 static TaskHandle_t Task1_Handle = NULL; /* Task1_Handle 任务句柄 */
 
-static TaskHandle_t Task2_Handle = NULL; /* Task2_Handle 任务句柄 */
+//static TaskHandle_t Task2_Handle = NULL; /* Task2_Handle 任务句柄 */
 
-static TaskHandle_t Task3_Handle = NULL; /* Task3_Handle 任务句柄 */
+//static TaskHandle_t Task3_Handle = NULL; /* Task3_Handle 任务句柄 */
 
-static TaskHandle_t Task4_Handle = NULL; /* Task4_Handle 任务句柄 */
+//static TaskHandle_t Task4_Handle = NULL; /* Task4_Handle 任务句柄 */
 
-static TaskHandle_t Task5_Handle = NULL; /* Task5_Handle 任务句柄 */
+//static TaskHandle_t Task5_Handle = NULL; /* Task5_Handle 任务句柄 */
 
 //QueueHandle_t MPU6050_Queue_Hnadle=NULL;/*创建MPU6050 传感器的 队列*/
 
-SemaphoreHandle_t Binary_Semaphore=NULL; /*二值信号量 句柄*/
+// SemaphoreHandle_t Binary_Semaphore=NULL; /*二值信号量 句柄*/
 
 /**************************** 任务句柄 ********************************/
 
@@ -75,15 +68,16 @@ void HardWare_Init(void)
     LCD_Init();//LCD初始化
 	LCD_Fill(0,0,LCD_W,LCD_H,BLACK);    	
 
-    LCD_ShowString(5,25,"Temp:",WHITE,BLACK,16,0);
-
-    LCD_ShowString(70,25,"C",WHITE,BLACK,16,0);
-
-    LCD_ShowString(5,40,"Humi:",WHITE,BLACK,16,0);
-
-    LCD_ShowString(70,40,"%",WHITE,BLACK,16,0);
-
     LCD_ShowString(20,5,"TX:",WHITE,BLACK,16,0);
+    LCD_ShowString(5,25,"Temp:",WHITE,BLACK,16,0);
+    // LCD_ShowString(70,25,"C",WHITE,BLACK,16,0);
+    LCD_ShowString(5,40,"Humi:",WHITE,BLACK,16,0);
+    // LCD_ShowString(70,40,"%",WHITE,BLACK,16,0);
+    
+    LCD_ShowString(5,65,"Pit:",WHITE,BLACK,16,0);
+    LCD_ShowString(5,85,"Rol:",WHITE,BLACK,16,0);
+
+
 	
  
     // OLED_Init();//0.96 OLED 初始化  SCL:PB5  SDA:PB9 
@@ -126,8 +120,8 @@ void HardWare_Init(void)
 int Start_Task(void)
 {
 
-    Binary_Semaphore= xSemaphoreCreateBinary();
-    if(Binary_Semaphore==NULL) configASSERT( 0 );/*==NULL 二值信号量创建失败*/
+    // Binary_Semaphore= xSemaphoreCreateBinary();
+    // if(Binary_Semaphore==NULL) configASSERT( 0 );/*==NULL 二值信号量创建失败*/
   
    // MPU6050_Queue_Hnadle= xQueueCreate( 3, 4 ); /*队列长度3 队列单元大小4Byte*/
     //if(MPU6050_Queue_Hnadle ==NULL ) configASSERT( 0 ); /*如果产生的队列 为NULL  则创建失败 报错*/
@@ -172,7 +166,7 @@ void AppTaskCreate(void)
     /* 创建 Task_0 任务 */
     xReturn = xTaskCreate(  (TaskFunction_t )Task_0, /* 任务入口函数 */
                             (const char* )"Task_0",/* 任务名字 */
-                            (uint16_t )128, /* 任务栈大小 128字=128*4 Byte=512Byte=0.5KB */
+                            (uint16_t )256, /* 任务栈大小 128字=128*4 Byte=512Byte=0.5KB */
                             (void* )NULL, /* 任务入口函数参数 */
                             (UBaseType_t )30, /* 任务的优先级 */
                             (TaskHandle_t* )&Task0_Handle);/* 任务控制块指针 */
@@ -184,7 +178,7 @@ void AppTaskCreate(void)
     /* 创建 Task_1 任务 */
     xReturn = xTaskCreate(  (TaskFunction_t )Task_1, /* 任务入口函数 */
                             (const char* )"Task_1",/* 任务名字 */
-                            (uint16_t )128, /* 任务栈大小 128字=128*4 Byte=512Byte=0.5KB */
+                            (uint16_t )256, /* 任务栈大小 128字=128*4 Byte=512Byte=0.5KB */
                             (void* )NULL, /* 任务入口函数参数 */
                             (UBaseType_t )29, /* 任务的优先级 */
                             (TaskHandle_t* )&Task1_Handle);/* 任务控制块指针 */
@@ -219,23 +213,6 @@ void AppTaskCreate(void)
 
 
 
-// float pitch,roll,yaw; 		//欧拉角
-// short aacx,aacy,aacz;		//加速度传感器原始数据
-// short gyrox,gyroy,gyroz;	//陀螺仪原始数据
-
-// float   AHT10_temp= 0;//检测到的温度数据
-// u8      AHT10_humi= 0;//检测到的湿度数据
-
-// int      tx_data[4]= {0};//接收数据的数据包
-// int      rx_data[4]= {5};//发送数据的数据包
-
-
-// unsigned int pwm_R=0,pwm_L=0,pwm=0;
-
-// short x=0; //模式状态变量
-
-
-
 
 float ADC_CH[3]={0}; // 局部变量，用于保存转换计算后的电压值         
 
@@ -243,7 +220,7 @@ u16 ADC_X=0,ADC_Y=0;//通道1的转化后的值     SIOP刹车信号 为0刹车 1不作为
 
 unsigned char car_data=5;
 unsigned char STOP=1;
-char Tx_buf[32]={0};
+char Tx_buf[8]={0};
 
 /**
  * @brief Get ADC value (get PS2 rocker )
@@ -262,8 +239,8 @@ void Task_0( void * pvParameters )
         ADC_Y=(ADC_CH[0]/1) * 100;// Y轴PB0  <155前进  >170后退
         ADC_X=(ADC_CH[1]/1) * 100;// X轴 PB1  <155右转 左轮加速 右轮减速   >170左转 右轮加速 左轮减速    
 
-        LCD_ShowIntNum(23,65,ADC_Y,4,WHITE,BLUE,16);
-        LCD_ShowIntNum(73,65,ADC_X,4,WHITE,RED,16);
+        // LCD_ShowIntNum(23,65,ADC_Y,4,WHITE,BLUE,16);
+        // LCD_ShowIntNum(73,65,ADC_X,4,WHITE,RED,16);
 
         STOP=GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_10);   
         if(STOP==0)
@@ -298,35 +275,35 @@ void Task_0( void * pvParameters )
         {
             case 0:// 0刹车
                 LCD_ShowString(45,5,"0-STOP!",WHITE,RED,16,0);
-                strcpy(Tx_buf,"0S\r\n");
+                strcpy(Tx_buf,"0");
                 // Delay_ms(10);
                 // if(STOP==0) ++x;
                 break;
 
             case 1://前进
                 LCD_ShowString(45,5,"1-GoGo!",WHITE,BLUE,16,0);   
-                strcpy(Tx_buf,"1G\r\n");
+                strcpy(Tx_buf,"1");
                 break;
 
             case 2://后退
                 LCD_ShowString(45,5,"2-Back!",BLACK,YELLOW,16,0); 
-                strcpy(Tx_buf,"2B\r\n");
+                strcpy(Tx_buf,"2");
                 break;
 
             case 3://左转
                 LCD_ShowString(45,5,"3-LL->!",BLACK,GREEN,16,0); 
-                strcpy(Tx_buf,"3L\r\n");
+                strcpy(Tx_buf,"3");
                 break;
 
             case 4://右转
                 LCD_ShowString(45,5,"4-RR->!",BLACK,GREEN,16,0);  
-                strcpy(Tx_buf,"4R\r\n");
+                strcpy(Tx_buf,"4");
 
                 break;
 
             case 5://静止
                 LCD_ShowString(45,5,"5-Rest!",BLACK,WHITE,16,0);   
-                strcpy(Tx_buf,"5X\r\n");
+                strcpy(Tx_buf,"5");
                 break;
 
         }
@@ -352,23 +329,31 @@ void Task_0( void * pvParameters )
  */
 void Task_1( void * pvParameters )
 {
-   // BaseType_t ret=0;
-    char Uart1_Rx[64]={0};   
-      
 
 	while(1)
     {
 
+        Send_String(Tx_buf);
+        memset(Tx_buf,0,8);
+        
+	   
         if (Get_Rx_Packge_State())
         {
-            strcpy(Uart1_Rx,Get_RxPackge());
-            Send_String(Uart1_Rx);
-            LCD_ShowString(15,90,Uart1_Rx,WHITE,BLACK,16,0);
-            memset(Uart1_Rx,0,64);
+            // printf("Pitch:%s\n", Uart1_Rx[0]);
+            // printf("Roll:%s\n", Uart1_Rx[1]);
+            // printf("Temp:%sC\n", Uart1_Rx[2]);
+            // printf("Humi:%%%s\n", Uart1_Rx[3]);
+            Get_RxPackge();
+			LCD_ShowString(50,25,Uart1_Rx[2],WHITE,BLACK,16,0);
+			LCD_ShowString(50,40,Uart1_Rx[3],WHITE,BLACK,16,0);
+			LCD_ShowString(40,65,Uart1_Rx[0],WHITE,BLACK,16,0);
+			LCD_ShowString(40,85,Uart1_Rx[1],WHITE,BLACK,16,0);
+
+            memset(Uart1_Rx,0,Rx_Count);
         }
 
-        Send_String(Tx_buf);
-        memset(Tx_buf,0,32);
+
+
 
 
         vTaskDelay(10); //延时 s，也就是 1000 个时钟节拍
@@ -388,8 +373,6 @@ void Task_1( void * pvParameters )
  */
 void Task_2( void * pvParameters )
 {   
-
-
 
 
     while(1)

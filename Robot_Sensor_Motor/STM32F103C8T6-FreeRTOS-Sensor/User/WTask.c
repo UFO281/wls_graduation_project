@@ -311,7 +311,7 @@ void Task_1( void * pvParameters )
         sprintf(CAN_Txbuf[1], "%d", (int)roll );
         sprintf(CAN_Txbuf[2], "%d", (int)AHT10_temp); /* 将整型 pitch 转化成字符形式 赋值给数组*/
         sprintf(CAN_Txbuf[3], "%d", (int)AHT10_humi);
-        sprintf(CAN_Txbuf[4], "endof");
+        sprintf(CAN_Txbuf[4], "endof\n");
 
         printf("Pitch:%s\n", CAN_Txbuf[0]);
         printf("Roll:%s\n", CAN_Txbuf[1]);

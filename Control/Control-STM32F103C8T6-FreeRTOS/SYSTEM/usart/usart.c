@@ -368,21 +368,23 @@ void S_Printf(char *format,...)
 
 
 
+u8 Uart1_Rx[5][4]={0};//串口接收数据仓库
+
 /**
  * @brief 获取串口接收到的数据包
  * 
  * @return char* 
  */
-char* Get_RxPackge(void)
+void* Get_RxPackge(void)
 {   
-    char Pa[64]={0};//串口接收数据仓库
 
-    strcpy(Pa,Rx_Pack);
+    // strcpy(Pa,Rx_Pack);
+    memcpy(Uart1_Rx,Rx_Pack,Rx_Count);
 
     memset(Rx_Pack,0,Rx_Count);
     Rx_Count=0;
 
-    return Pa;
+    return Uart1_Rx;
 
 }
 

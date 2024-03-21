@@ -50,8 +50,10 @@
 #define W_USART3  0
 
 extern uint8_t Rx_Data,Rx_Flag,Rx_Count;
-extern char Tx_Pack[],Rx_Pack[];
-// extern char Pa[];
+extern char Tx_Pack[],Rx_Pack[64];//发送 数据包 接收数据包
+
+extern u8 Uart1_Rx[5][4];//串口接收数据仓库
+
 
 extern uint8_t Rx_State;
 
@@ -69,7 +71,7 @@ uint8_t Get_Usart1_RxData(void);
 uint8_t Get_Usart1_RxFlag(void);
 
 u8 Get_Rx_Packge_State(void);
-char* Get_RxPackge(void);
+void* Get_RxPackge(void);
 
 
 

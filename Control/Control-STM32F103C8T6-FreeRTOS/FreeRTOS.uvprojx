@@ -735,11 +735,6 @@
               <FilePath>.\Hardware\NRF24L01\spi.c</FilePath>
             </File>
             <File>
-              <FileName>dht11.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\DHT11\dht11.c</FilePath>
-            </File>
-            <File>
               <FileName>lcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\LCD\lcd.c</FilePath>
