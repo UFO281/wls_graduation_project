@@ -1,15 +1,15 @@
 /**
  * @file USART.h
  * @author wls
- * @brief ´®¿ÚÍ¨ĞÅÅäÖÃ 
- * STM32F103C8T6  ÓĞUSART1(¿ÉÓÃ×÷ÏÂÔØIO)    USART2      USART3
+ * @brief ä¸²å£é€šä¿¡é…ç½® 
+ * STM32F103C8T6  æœ‰USART1(å¯ç”¨ä½œä¸‹è½½IO)    USART2      USART3
  * 
  * USART1_CTS :  PA11 
  * USART1_RTS :  PA12
  * USART1_CK :   PA8   
  * 
- * USART1_TX :  PA9    ¸´ÓÃ PB6
- * USART1_RX :  PA10   ¸´ÓÃ PB7
+ * USART1_TX :  PA9    å¤ç”¨ PB6
+ * USART1_RX :  PA10   å¤ç”¨ PB7
  * 
  * 
  * USART2_CTS :  PA0 
@@ -45,14 +45,14 @@
 #include "stdarg.h"
 #include <string.h>
 
-#define W_USART1  1   //ÆôÓÃ ÖÃ1  ²»ÆôÓÃÖÃ0
+#define W_USART1  1   //å¯ç”¨ ç½®1  ä¸å¯ç”¨ç½®0
 #define W_USART2  0
 #define W_USART3  0
 
 extern uint8_t Rx_Data,Rx_Flag,Rx_Count;
-extern char Tx_Pack[],Rx_Pack[64];//·¢ËÍ Êı¾İ°ü ½ÓÊÕÊı¾İ°ü
+extern char Tx_Pack[],Rx_Pack[64];//å‘é€ æ•°æ®åŒ… æ¥æ”¶æ•°æ®åŒ…
 
-extern u8 Uart1_Rx[5][4];//´®¿Ú½ÓÊÕÊı¾İ²Ö¿â
+extern u8 Uart1_Rx[5][4];//ä¸²å£æ¥æ”¶æ•°æ®ä»“åº“
 
 
 extern uint8_t Rx_State;
@@ -92,22 +92,22 @@ void* Get_RxPackge(void);
 //#include "EXTI.h"
 #include "wadc.h"
 //#include "WDMA.h"
-#include "USART.h"// ´®¿Ú
+#include "USART.h"// ä¸²å£
 
 
 
 
 
 /**  
- * @brief Ö÷º¯Êı   
+ * @brief ä¸»å‡½æ•°   
  *  
  * @return int    
  */  
 int main(void)
 {
 
-	WADC_Init();//¶àÍ¨µÀADC³õÊ¼»¯ NO +DMA
-    WUsart_Init();//USART³õÊ¼»¯  
+	WADC_Init();//å¤šé€šé“ADCåˆå§‹åŒ– NO +DMA
+    WUsart_Init();//USARTåˆå§‹åŒ–  
 
 	OLED_Init();
   
@@ -118,8 +118,8 @@ int main(void)
 	while(1)
 	{
 		
-        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
-        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
+        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
+        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
         
 		OLED_ShowNum(1, 6,ADC_CH0, 5);
         OLED_ShowNum(2, 6,ADC_CH0, 5);
@@ -133,19 +133,19 @@ int main(void)
 //-------------------sendstring printf-------------------
 
 
-//-----------½ÓÊÕÒ»¸ö×Ö½ÚÊı¾İ------------
+//-----------æ¥æ”¶ä¸€ä¸ªå­—èŠ‚æ•°æ®------------
 
         if(Get_Usart1_RxFlag())
         {
             Send_Byte(Get_Usart1_RxData());     
             //OLED_ShowString(4, 1, Rx_Pack);       
         }
-//-----------½ÓÊÕÒ»¸ö×Ö½ÚÊı¾İ------------
+//-----------æ¥æ”¶ä¸€ä¸ªå­—èŠ‚æ•°æ®------------
 
 
 
 
-//-----------USART1 ÊÕ·¢×Ö·û´®------------
+//-----------USART1 æ”¶å‘å­—ç¬¦ä¸²------------
 
 #include "stm32f10x.h"     // Device header
 #include "Delay.h"
@@ -155,22 +155,22 @@ int main(void)
 //#include "EXTI.h"
 #include "wadc.h"
 //#include "WDMA.h"
-#include "USART.h"// ´®¿Ú
+#include "USART.h"// ä¸²å£
 
 
 
 
 
 /**  
- * @brief Ö÷º¯Êı   
+ * @brief ä¸»å‡½æ•°   
  *  
  * @return int    
  */  
 int main(void)
 {
 
-	WADC_Init();//¶àÍ¨µÀADC³õÊ¼»¯ NO +DMA
-    WUsart_Init();//USART³õÊ¼»¯  
+	WADC_Init();//å¤šé€šé“ADCåˆå§‹åŒ– NO +DMA
+    WUsart_Init();//USARTåˆå§‹åŒ–  
 
 	OLED_Init();
   
@@ -182,15 +182,15 @@ int main(void)
 	while(1)
 	{
 		
-        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
-        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
+        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
+        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
         
 		OLED_ShowNum(1, 6,ADC_CH0, 5);
         OLED_ShowNum(2, 6,ADC_CH1, 5);
    
         //Send_String("npn\n");
         //printf("X %d Y: %d \n",ADC_CH0,ADC_CH1);
-        //S_Printf("\t ¶şÀÉÏÔÊ¥Õæ¾ı ÍõÁîË¶ X %d Y: %d \r\n",ADC_CH0,ADC_CH1);
+        //S_Printf("\t äºŒéƒæ˜¾åœ£çœŸå› ç‹ä»¤ç¡• X %d Y: %d \r\n",ADC_CH0,ADC_CH1);
 
         if(Get_Rx_Packge_State())
         {
@@ -205,7 +205,7 @@ int main(void)
 
 	}
 }
-//-----------USART1 ÊÕ·¢×Ö·û´®------------
+//-----------USART1 æ”¶å‘å­—ç¬¦ä¸²------------
 
 
 #include "stm32f10x.h"     // Device header
@@ -216,22 +216,22 @@ int main(void)
 //#include "EXTI.h"
 #include "wadc.h"
 //#include "WDMA.h"
-#include "USART.h"// ´®¿Ú
+#include "USART.h"// ä¸²å£
 
 
 
 
 
 /**  
- * @brief Ö÷º¯Êı   
+ * @brief ä¸»å‡½æ•°   
  *  
  * @return int    
  */  
 int main(void)
 {
 
-	WADC_Init();//¶àÍ¨µÀADC³õÊ¼»¯ NO +DMA
-    WUsart_Init();//USART³õÊ¼»¯  
+	WADC_Init();//å¤šé€šé“ADCåˆå§‹åŒ– NO +DMA
+    WUsart_Init();//USARTåˆå§‹åŒ–  
 
 	OLED_Init();
   
@@ -243,15 +243,15 @@ int main(void)
 	while(1)
 	{
 		
-        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
-        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
+        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
+        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
         
 		OLED_ShowNum(1, 6,ADC_CH0, 5);
         OLED_ShowNum(2, 6,ADC_CH1, 5);
    
         //Send_String("npn\n");
         //printf("X %d Y: %d \n",ADC_CH0,ADC_CH1);
-        //S_Printf("\t ¶şÀÉÏÔÊ¥Õæ¾ı ÍõÁîË¶ X %d Y: %d \r\n",ADC_CH0,ADC_CH1);
+        //S_Printf("\t äºŒéƒæ˜¾åœ£çœŸå› ç‹ä»¤ç¡• X %d Y: %d \r\n",ADC_CH0,ADC_CH1);
 
         if(Get_Rx_Packge_State())
         {
@@ -278,23 +278,23 @@ int main(void)
 //#include "EXTI.h"
 #include "wadc.h"
 //#include "WDMA.h"
-#include "USART.h"// ´®¿Ú
+#include "USART.h"// ä¸²å£
 
 
 
 
-//-----------------¼ì²â½ÓÊÕµ½µÄÊı¾İÊÇ·ñÕıÈ·---------------
+//-----------------æ£€æµ‹æ¥æ”¶åˆ°çš„æ•°æ®æ˜¯å¦æ­£ç¡®---------------
 
 /**  
- * @brief Ö÷º¯Êı   
+ * @brief ä¸»å‡½æ•°   
  *  
  * @return int    
  */  
 int main(void)
 {
 
-	WADC_Init();//¶àÍ¨µÀADC³õÊ¼»¯ NO +DMA
-    WUsart3_Init();//USART1³õÊ¼»¯  
+	WADC_Init();//å¤šé€šé“ADCåˆå§‹åŒ– NO +DMA
+    WUsart3_Init();//USART1åˆå§‹åŒ–  
 
 	OLED_Init();
   
@@ -306,30 +306,30 @@ int main(void)
 	while(1)
 	{
 		
-        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
-        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//µ¥Î» 100mv
+        ADC_CH0= ( ( AD_GetValue(ADC_Channel_0) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
+        ADC_CH1= ( ( AD_GetValue(ADC_Channel_1) /4096.0 ) *3300 ) / 100 ;//å•ä½ 100mv
         
 		OLED_ShowNum(1, 6,ADC_CH0, 5);
         OLED_ShowNum(2, 6,ADC_CH1, 5);
    
         //Send_String("npn\n");
         //printf("X %d Y: %d \n",ADC_CH0,ADC_CH1);
-        //S_Printf("\t ¶şÀÉÏÔÊ¥Õæ¾ı ÍõÁîË¶ X %d Y: %d \r\n",ADC_CH0,ADC_CH1);
+        //S_Printf("\t äºŒéƒæ˜¾åœ£çœŸå› ç‹ä»¤ç¡• X %d Y: %d \r\n",ADC_CH0,ADC_CH1);
 
         if(Get_Rx_Packge_State())
         {
             Rx_string=Get_RxPackge();
            // OLED_ShowString(3, 2, Rx_string);
-            S_Printf("\t ¶şÀÉÏÔÊ¥Õæ¾ı ÍõÁîË¶ X %d Y: %d %s \r\n",ADC_CH0,ADC_CH1,Rx_string);
-            S_Printf("½ÓÊÕµ½µÄÊı¾İ: %i %i %i %i \n",Rx_string[0],Rx_string[1],Rx_string[2],Rx_string[3]);
-            OLED_ShowNum(3,2,strcmp(Rx_string,"wl#"),5);//¶Ô±È½ÓÊÕµ½µÄ×Ö·û´®Êı¾İ ºÍ "w1#"ÏàµÈ
+            S_Printf("\t äºŒéƒæ˜¾åœ£çœŸå› ç‹ä»¤ç¡• X %d Y: %d %s \r\n",ADC_CH0,ADC_CH1,Rx_string);
+            S_Printf("æ¥æ”¶åˆ°çš„æ•°æ®: %i %i %i %i \n",Rx_string[0],Rx_string[1],Rx_string[2],Rx_string[3]);
+            OLED_ShowNum(3,2,strcmp(Rx_string,"wl#"),5);//å¯¹æ¯”æ¥æ”¶åˆ°çš„å­—ç¬¦ä¸²æ•°æ® å’Œ "w1#"ç›¸ç­‰
             OLED_ShowNum(4,2,sizeof("w#") ,5);
             Rx_string=NULL;
         }
         
 	}
 }
-//-----------------¼ì²â½ÓÊÕµ½µÄÊı¾İÊÇ·ñÕıÈ·---------------
+//-----------------æ£€æµ‹æ¥æ”¶åˆ°çš„æ•°æ®æ˜¯å¦æ­£ç¡®---------------
 
 
 

@@ -8,26 +8,17 @@
  * @copyright Copyright (c) 2024
  * 
  */
-#include "WTask.h" //ÓÃ»§×Ô¶¨ÒåÈÎÎñ
+#include "WTask.h" //ç”¨æˆ·è‡ªå®šä¹‰ä»»åŠ¡
 
 
-
-
-
-
-/**
- * @brief Ö÷º¯Êı 
- * 
- * @return int 
- */
 int main(void)
 {   
 	
-    HardWare_Init();// Ó²¼ş³õÊ¼»¯       	  
+    HardWare_Init();// ç¡¬ä»¶åˆå§‹åŒ–       	  
 
-    Start_Task();   //¿ªÊ¼ÈÎÎñÈÎÎñ
+    Start_Task();   //å¼€å§‹ä»»åŠ¡ä»»åŠ¡
 
-    while (1); /* Õı³£²»»áÖ´ĞĞµ½ÕâÀï */
+    while (1); /* æ­£å¸¸ä¸ä¼šæ‰§è¡Œåˆ°è¿™é‡Œ */
 
 }
 

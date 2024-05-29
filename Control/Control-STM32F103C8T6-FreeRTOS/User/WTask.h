@@ -1,7 +1,7 @@
 /**
  * @file WTask.h
  * @author wls
- * @brief ÓÃ»§×Ô¶¨ÒåÈÎÎñº¯Êı ÉùÃ÷
+ * @brief ç”¨æˆ·è‡ªå®šä¹‰ä»»åŠ¡å‡½æ•° å£°æ˜
  * @version 0.1
  * @date 2022-11-01
  * 
@@ -20,7 +20,7 @@
 #include "semphr.h"
 #include "task.h" //FreeRTOS Task Data 
 #include "string.h"
-#include "delay.h"//ÑÓÊ±º¯Êı
+#include "delay.h"//å»¶æ—¶å‡½æ•°
 #include "usart.h"
 #include "LCD/lcd.h"
 #include "LCD/lcd_init.h"
@@ -28,10 +28,10 @@
 
 
 
-// #include "oled.h"//ÏÔÊ¾ÆÁ 0.96 OLED
+// #include "oled.h"//æ˜¾ç¤ºå± 0.96 OLED
 // #include "MPU6050\mpu6050.h"//MPU6050
 // #include "inv_mpu.h"
-// #include "EXTI.h" //Íâ²¿ÖĞ¶Ï
+// #include "EXTI.h" //å¤–éƒ¨ä¸­æ–­
 // #include "L298N\L298N.h"//
 // #include "NRF24L01\24l01.h" 
 // #define Use_AHT10   0   // use AHT10 temp sensor
@@ -51,17 +51,17 @@
 
 
 
-//--------------------±äÁ¿ÉùÃ÷ÇøÓò--------------------
+//--------------------å˜é‡å£°æ˜åŒºåŸŸ--------------------
 
 
 
 
-//--------------------±äÁ¿ÉùÃ÷ÇøÓò--------------------
+//--------------------å˜é‡å£°æ˜åŒºåŸŸ--------------------
 
 
 
 
-//-------------------------º¯ÊıÉùÃ÷ÇøÓò--------------------
+//-------------------------å‡½æ•°å£°æ˜åŒºåŸŸ--------------------
 
 void HardWare_Init(void);
 int Start_Task(void);
@@ -74,7 +74,7 @@ void Task_4( void * pvParameters );
 void Task_5( void * pvParameters );
 uint16_t Get_Absolute_value(int x);
 
-//-------------------------º¯ÊıÉùÃ÷ÇøÓò--------------------
+//-------------------------å‡½æ•°å£°æ˜åŒºåŸŸ--------------------
 
 
 

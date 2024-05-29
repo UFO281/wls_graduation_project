@@ -10,16 +10,6 @@
  */   
 #include "WTask.h" //用户自定义任务
 
-
-
-
-
-
-/**
- * @brief 主函数 
- * 
- * @return int 
- */
 int main(void)
 {   
 	

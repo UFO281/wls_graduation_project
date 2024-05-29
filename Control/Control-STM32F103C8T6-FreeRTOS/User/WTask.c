@@ -1,7 +1,7 @@
 /**
  * @file WTask.c
  * @author wls
- * @brief ÓÃ»§×Ô¶¨Òåº¯Êı ¶¨ÒåÎÄ¼ş
+ * @brief ç”¨æˆ·è‡ªå®šä¹‰å‡½æ•° å®šä¹‰æ–‡ä»¶
  * @version 0.1
  * @date 2022-11-01
  * 
@@ -16,32 +16,32 @@
 
 
 
-/**************************** ÈÎÎñ¾ä±ú ********************************/
+/**************************** ä»»åŠ¡å¥æŸ„ ********************************/
  /*
- ÈÎÎñ¾ä±úÊÇÒ»¸öÖ¸Õë£¬ÓÃÓÚÖ¸ÏòÒ»¸öÈÎÎñ£¬µ±ÈÎÎñ´´½¨ºÃÖ®ºó£¬Ëü¾Í¾ßÓĞÁËÒ»¸öÈÎÎñ¾ä±ú
- ÒÔºóÎÒÃÇÒªÏë²Ù×÷Õâ¸öÈÎÎñ¶¼ĞèÒªÍ¨¹ıÕâ¸öÈÎÎñ¾ä±ú£¬Èç¹ûÊÇ×ÔÉíµÄÈÎÎñ²Ù×÷×Ô¼º£¬ÄÇÃ´
- Õâ¸ö¾ä±ú¿ÉÒÔÎª NULL¡£
+ ä»»åŠ¡å¥æŸ„æ˜¯ä¸€ä¸ªæŒ‡é’ˆï¼Œç”¨äºæŒ‡å‘ä¸€ä¸ªä»»åŠ¡ï¼Œå½“ä»»åŠ¡åˆ›å»ºå¥½ä¹‹åï¼Œå®ƒå°±å…·æœ‰äº†ä¸€ä¸ªä»»åŠ¡å¥æŸ„
+ ä»¥åæˆ‘ä»¬è¦æƒ³æ“ä½œè¿™ä¸ªä»»åŠ¡éƒ½éœ€è¦é€šè¿‡è¿™ä¸ªä»»åŠ¡å¥æŸ„ï¼Œå¦‚æœæ˜¯è‡ªèº«çš„ä»»åŠ¡æ“ä½œè‡ªå·±ï¼Œé‚£ä¹ˆ
+ è¿™ä¸ªå¥æŸ„å¯ä»¥ä¸º NULLã€‚
  */
 
-static TaskHandle_t AppTaskCreate_Handle = NULL; /* ´´½¨ÈÎÎñ¾ä±ú */
+static TaskHandle_t AppTaskCreate_Handle = NULL; /* åˆ›å»ºä»»åŠ¡å¥æŸ„ */
 
-static TaskHandle_t Task0_Handle = NULL; /* Task0_Handle ÈÎÎñ¾ä±ú */
+static TaskHandle_t Task0_Handle = NULL; /* Task0_Handle ä»»åŠ¡å¥æŸ„ */
 
-static TaskHandle_t Task1_Handle = NULL; /* Task1_Handle ÈÎÎñ¾ä±ú */
+static TaskHandle_t Task1_Handle = NULL; /* Task1_Handle ä»»åŠ¡å¥æŸ„ */
 
-//static TaskHandle_t Task2_Handle = NULL; /* Task2_Handle ÈÎÎñ¾ä±ú */
+//static TaskHandle_t Task2_Handle = NULL; /* Task2_Handle ä»»åŠ¡å¥æŸ„ */
 
-//static TaskHandle_t Task3_Handle = NULL; /* Task3_Handle ÈÎÎñ¾ä±ú */
+//static TaskHandle_t Task3_Handle = NULL; /* Task3_Handle ä»»åŠ¡å¥æŸ„ */
 
-//static TaskHandle_t Task4_Handle = NULL; /* Task4_Handle ÈÎÎñ¾ä±ú */
+//static TaskHandle_t Task4_Handle = NULL; /* Task4_Handle ä»»åŠ¡å¥æŸ„ */
 
-//static TaskHandle_t Task5_Handle = NULL; /* Task5_Handle ÈÎÎñ¾ä±ú */
+//static TaskHandle_t Task5_Handle = NULL; /* Task5_Handle ä»»åŠ¡å¥æŸ„ */
 
-//QueueHandle_t MPU6050_Queue_Hnadle=NULL;/*´´½¨MPU6050 ´«¸ĞÆ÷µÄ ¶ÓÁĞ*/
+//QueueHandle_t MPU6050_Queue_Hnadle=NULL;/*åˆ›å»ºMPU6050 ä¼ æ„Ÿå™¨çš„ é˜Ÿåˆ—*/
 
-// SemaphoreHandle_t Binary_Semaphore=NULL; /*¶şÖµĞÅºÅÁ¿ ¾ä±ú*/
+// SemaphoreHandle_t Binary_Semaphore=NULL; /*äºŒå€¼ä¿¡å·é‡ å¥æŸ„*/
 
-/**************************** ÈÎÎñ¾ä±ú ********************************/
+/**************************** ä»»åŠ¡å¥æŸ„ ********************************/
 
 
 
@@ -59,13 +59,13 @@ static TaskHandle_t Task1_Handle = NULL; /* Task1_Handle ÈÎÎñ¾ä±ú */
 void HardWare_Init(void)
 {
  
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//ÉèÖÃÏµÍ³ÖĞ¶ÏÓÅÏÈ¼¶·Ö×é4 4¸öbit ¶¼ÊÇ¿ØÖÆÇÀÕ¼ÓÅÏÈ¼¶ÁË Ã»ÓĞÏìÓ¦ÓÅÏÈ¼¶µÄ	 	 
-    delay_init(); //ÑÓÊ±º¯Êı³õÊ¼»¯	ÓÀÔ¶·ÅÔÚ ×î¿ªÊ¼´¦
-    ConfigureTimeForRunTimeStats(); //ÅäÖÃ TIM2 Ê¹ÆäÎª FreeRTOS µÄÊ±¼äÍ³¼ÆÌá¹©Ê±»ù 
-    WUsart1_Init();//USART1 ³õÊ¼»¯ 115200²¨ÌØÂÊ 8¸öÊı¾İÎ» 1¸öÍ£Ö¹Î» ÎŞĞ£ÑéÎ»
-    WADC_Init();//ADCÅäÖÃ³õÊ¼»¯
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//è®¾ç½®ç³»ç»Ÿä¸­æ–­ä¼˜å…ˆçº§åˆ†ç»„4 4ä¸ªbit éƒ½æ˜¯æ§åˆ¶æŠ¢å ä¼˜å…ˆçº§äº† æ²¡æœ‰å“åº”ä¼˜å…ˆçº§çš„	 	 
+    delay_init(); //å»¶æ—¶å‡½æ•°åˆå§‹åŒ–	æ°¸è¿œæ”¾åœ¨ æœ€å¼€å§‹å¤„
+    ConfigureTimeForRunTimeStats(); //é…ç½® TIM2 ä½¿å…¶ä¸º FreeRTOS çš„æ—¶é—´ç»Ÿè®¡æä¾›æ—¶åŸº 
+    WUsart1_Init();//USART1 åˆå§‹åŒ– 115200æ³¢ç‰¹ç‡ 8ä¸ªæ•°æ®ä½ 1ä¸ªåœæ­¢ä½ æ— æ ¡éªŒä½
+    WADC_Init();//ADCé…ç½®åˆå§‹åŒ–
 
-    LCD_Init();//LCD³õÊ¼»¯
+    LCD_Init();//LCDåˆå§‹åŒ–
 	LCD_Fill(0,0,LCD_W,LCD_H,BLACK);    	
 
     LCD_ShowString(20,5,"TX:",WHITE,BLACK,16,0);
@@ -80,32 +80,32 @@ void HardWare_Init(void)
 
 	
  
-    // OLED_Init();//0.96 OLED ³õÊ¼»¯  SCL:PB5  SDA:PB9 
+    // OLED_Init();//0.96 OLED åˆå§‹åŒ–  SCL:PB5  SDA:PB9 
 
  
-    // MPU_Init();	//³õÊ¼»¯MPU6050 SCL:PB10  SDA:PB11 
-    // mpu_dmp_init();//MPU6050 ³õÊ¼»¯Ê§°Ü ³ÌĞò¾ÍÏİÈëÕâËÀÑ­»·ÁË 
+    // MPU_Init();	//åˆå§‹åŒ–MPU6050 SCL:PB10  SDA:PB11 
+    // mpu_dmp_init();//MPU6050 åˆå§‹åŒ–å¤±è´¥ ç¨‹åºå°±é™·å…¥è¿™æ­»å¾ªç¯äº† 
 
     // #if (Use_AHT10==1)
-    //     AHT10Init();//ÎÂÊª¶È´«¸ĞÆ÷³õÊ¼»¯  SCL:PB3 SDA:PB4 
+    //     AHT10Init();//æ¸©æ¹¿åº¦ä¼ æ„Ÿå™¨åˆå§‹åŒ–  SCL:PB3 SDA:PB4 
     //     AHT10Reset(); 
     // #elif (Use_DHT11==1)
-    //     DHT11_Init();//ÎÂÊª¶È´«¸ĞÆ÷ PA11        
+    //     DHT11_Init();//æ¸©æ¹¿åº¦ä¼ æ„Ÿå™¨ PA11        
     // #endif
 
 
-	// Extern_Interrupt_Init();// Íâ²¿ÖĞ¶ÏÉÏÉıÑØ´¥·¢  CH12:PA12  CH15:PA15   
+	// Extern_Interrupt_Init();// å¤–éƒ¨ä¸­æ–­ä¸Šå‡æ²¿è§¦å‘  CH12:PA12  CH15:PA15   
 
-    // wheels_GPIO_Init();//ÂÖ×Óµç»úGPIO ³õÊ¼»¯   PB0 PB1 PC14 PC15
+    // wheels_GPIO_Init();//è½®å­ç”µæœºGPIO åˆå§‹åŒ–   PB0 PB1 PC14 PC15
 
     // Timer4_Timing_Init(1000,7200);//72MHZ/7200 = 10KHZ  100us*10*100=100ms
 
-    // Timer3_PWM_Init(1000,72);// 1KHZpwm PWM×î´óÖµÎª1000 R:CH1PA6 L:CH2PA7
+    // Timer3_PWM_Init(1000,72);// 1KHZpwm PWMæœ€å¤§å€¼ä¸º1000 R:CH1PA6 L:CH2PA7
 
 
-    // NRF24L01_Init(); //³õÊ¼»¯ÎŞÏßÍ¨ĞÅÄ£¿éNRF24L01 ,PB6 PB7 PB8, PB13, PB14, PB15
+    // NRF24L01_Init(); //åˆå§‹åŒ–æ— çº¿é€šä¿¡æ¨¡å—NRF24L01 ,PB6 PB7 PB8, PB13, PB14, PB15
 
-	// NRF24L01_Check();//¼ì²éÊÇ·ñÄÜÕı³£¹¤×÷  Ê§°ÜÁË¾Í»áÏİÈëÕâ¸öËÀÑ­»·
+	// NRF24L01_Check();//æ£€æŸ¥æ˜¯å¦èƒ½æ­£å¸¸å·¥ä½œ  å¤±è´¥äº†å°±ä¼šé™·å…¥è¿™ä¸ªæ­»å¾ªç¯
 
 
 }
@@ -114,33 +114,33 @@ void HardWare_Init(void)
 
 
 /**
- * @brief ´´½¨¿ªÊ¼ÈÎÎñ
+ * @brief åˆ›å»ºå¼€å§‹ä»»åŠ¡
  * 
  */
 int Start_Task(void)
 {
 
     // Binary_Semaphore= xSemaphoreCreateBinary();
-    // if(Binary_Semaphore==NULL) configASSERT( 0 );/*==NULL ¶şÖµĞÅºÅÁ¿´´½¨Ê§°Ü*/
+    // if(Binary_Semaphore==NULL) configASSERT( 0 );/*==NULL äºŒå€¼ä¿¡å·é‡åˆ›å»ºå¤±è´¥*/
   
-   // MPU6050_Queue_Hnadle= xQueueCreate( 3, 4 ); /*¶ÓÁĞ³¤¶È3 ¶ÓÁĞµ¥Ôª´óĞ¡4Byte*/
-    //if(MPU6050_Queue_Hnadle ==NULL ) configASSERT( 0 ); /*Èç¹û²úÉúµÄ¶ÓÁĞ ÎªNULL  Ôò´´½¨Ê§°Ü ±¨´í*/
+   // MPU6050_Queue_Hnadle= xQueueCreate( 3, 4 ); /*é˜Ÿåˆ—é•¿åº¦3 é˜Ÿåˆ—å•å…ƒå¤§å°4Byte*/
+    //if(MPU6050_Queue_Hnadle ==NULL ) configASSERT( 0 ); /*å¦‚æœäº§ç”Ÿçš„é˜Ÿåˆ— ä¸ºNULL  åˆ™åˆ›å»ºå¤±è´¥ æŠ¥é”™*/
 
-    BaseType_t xReturn = pdPASS;/* ¶¨ÒåÒ»¸ö´´½¨ĞÅÏ¢·µ»ØÖµ£¬Ä¬ÈÏÎª pdPASS */
+    BaseType_t xReturn = pdPASS;/* å®šä¹‰ä¸€ä¸ªåˆ›å»ºä¿¡æ¯è¿”å›å€¼ï¼Œé»˜è®¤ä¸º pdPASS */
 
-    /* ´´½¨ AppTaskCreate ÈÎÎñ */   
-    xReturn = xTaskCreate(  (TaskFunction_t )AppTaskCreate, /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char* )"AppTaskCreate",/* ÈÎÎñÃû×Ö */
-                            (uint16_t )128, /* ÈÎÎñÕ»´óĞ¡ 128*4=512 Byte=0.5KB*/
-                            (void* )NULL,/* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t )31, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t* )&AppTaskCreate_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+    /* åˆ›å»º AppTaskCreate ä»»åŠ¡ */   
+    xReturn = xTaskCreate(  (TaskFunction_t )AppTaskCreate, /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char* )"AppTaskCreate",/* ä»»åŠ¡åå­— */
+                            (uint16_t )128, /* ä»»åŠ¡æ ˆå¤§å° 128*4=512 Byte=0.5KB*/
+                            (void* )NULL,/* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t )31, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t* )&AppTaskCreate_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
 
     configASSERT( xReturn );
-    /* Æô¶¯ÈÎÎñµ÷¶È */    
+    /* å¯åŠ¨ä»»åŠ¡è°ƒåº¦ */    
     if (pdPASS == xReturn)
     {
-        vTaskStartScheduler(); /* Æô¶¯ÈÎÎñ£¬¿ªÆôµ÷¶È */   
+        vTaskStartScheduler(); /* å¯åŠ¨ä»»åŠ¡ï¼Œå¼€å¯è°ƒåº¦ */   
 	    return 0;         
     }
 
@@ -153,70 +153,70 @@ int Start_Task(void)
 
 
 /**
- * @brief  ´´½¨ ÓÃ»§ÈÎÎñ ÀàËÆÓÚ¸ùÈÎÎñ
+ * @brief  åˆ›å»º ç”¨æˆ·ä»»åŠ¡ ç±»ä¼¼äºæ ¹ä»»åŠ¡
  * 
  */
 void AppTaskCreate(void)
 {
 
-    BaseType_t xReturn = pdPASS;/* ¶¨ÒåÒ»¸ö´´½¨ĞÅÏ¢·µ»ØÖµ£¬Ä¬ÈÏÎª pdPASS */
+    BaseType_t xReturn = pdPASS;/* å®šä¹‰ä¸€ä¸ªåˆ›å»ºä¿¡æ¯è¿”å›å€¼ï¼Œé»˜è®¤ä¸º pdPASS */
 
-    taskENTER_CRITICAL(); //½øÈëÁÙ½çÇø
+    taskENTER_CRITICAL(); //è¿›å…¥ä¸´ç•ŒåŒº
         
-    /* ´´½¨ Task_0 ÈÎÎñ */
-    xReturn = xTaskCreate(  (TaskFunction_t )Task_0, /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char* )"Task_0",/* ÈÎÎñÃû×Ö */
-                            (uint16_t )256, /* ÈÎÎñÕ»´óĞ¡ 128×Ö=128*4 Byte=512Byte=0.5KB */
-                            (void* )NULL, /* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t )30, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t* )&Task0_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+    /* åˆ›å»º Task_0 ä»»åŠ¡ */
+    xReturn = xTaskCreate(  (TaskFunction_t )Task_0, /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char* )"Task_0",/* ä»»åŠ¡åå­— */
+                            (uint16_t )256, /* ä»»åŠ¡æ ˆå¤§å° 128å­—=128*4 Byte=512Byte=0.5KB */
+                            (void* )NULL, /* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t )30, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t* )&Task0_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
     configASSERT( xReturn );
 
 
 
 
-    /* ´´½¨ Task_1 ÈÎÎñ */
-    xReturn = xTaskCreate(  (TaskFunction_t )Task_1, /* ÈÎÎñÈë¿Úº¯Êı */
-                            (const char* )"Task_1",/* ÈÎÎñÃû×Ö */
-                            (uint16_t )256, /* ÈÎÎñÕ»´óĞ¡ 128×Ö=128*4 Byte=512Byte=0.5KB */
-                            (void* )NULL, /* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-                            (UBaseType_t )29, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-                            (TaskHandle_t* )&Task1_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+    /* åˆ›å»º Task_1 ä»»åŠ¡ */
+    xReturn = xTaskCreate(  (TaskFunction_t )Task_1, /* ä»»åŠ¡å…¥å£å‡½æ•° */
+                            (const char* )"Task_1",/* ä»»åŠ¡åå­— */
+                            (uint16_t )256, /* ä»»åŠ¡æ ˆå¤§å° 128å­—=128*4 Byte=512Byte=0.5KB */
+                            (void* )NULL, /* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+                            (UBaseType_t )29, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+                            (TaskHandle_t* )&Task1_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
     configASSERT( xReturn );
 
 
-    // /* ´´½¨ Task_2 ÈÎÎñ */
-    // xReturn = xTaskCreate(  (TaskFunction_t )Task_2, /* ÈÎÎñÈë¿Úº¯Êı */
-    //                         (const char* )"Task_2",/* ÈÎÎñÃû×Ö */
-    //                         (uint16_t )128, /* ÈÎÎñÕ»´óĞ¡ 128×Ö=128*4 Byte=512Byte=0.5KB */
-    //                         (void* )NULL, /* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-    //                         (UBaseType_t )28, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-    //                         (TaskHandle_t* )&Task2_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+    // /* åˆ›å»º Task_2 ä»»åŠ¡ */
+    // xReturn = xTaskCreate(  (TaskFunction_t )Task_2, /* ä»»åŠ¡å…¥å£å‡½æ•° */
+    //                         (const char* )"Task_2",/* ä»»åŠ¡åå­— */
+    //                         (uint16_t )128, /* ä»»åŠ¡æ ˆå¤§å° 128å­—=128*4 Byte=512Byte=0.5KB */
+    //                         (void* )NULL, /* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+    //                         (UBaseType_t )28, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+    //                         (TaskHandle_t* )&Task2_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
     // configASSERT( xReturn );
 
 
-    // /* ´´½¨ Task_3 ÈÎÎñ */
-    // xReturn = xTaskCreate(  (TaskFunction_t )Task_3, /* ÈÎÎñÈë¿Úº¯Êı */
-    //                         (const char* )"Task_3",/* ÈÎÎñÃû×Ö */
-    //                         (uint16_t )128, /* ÈÎÎñÕ»´óĞ¡ 128×Ö=128*4 Byte=512Byte=0.5KB */
-    //                         (void* )NULL, /* ÈÎÎñÈë¿Úº¯Êı²ÎÊı */
-    //                         (UBaseType_t )27, /* ÈÎÎñµÄÓÅÏÈ¼¶ */
-    //                         (TaskHandle_t* )&Task3_Handle);/* ÈÎÎñ¿ØÖÆ¿éÖ¸Õë */
+    // /* åˆ›å»º Task_3 ä»»åŠ¡ */
+    // xReturn = xTaskCreate(  (TaskFunction_t )Task_3, /* ä»»åŠ¡å…¥å£å‡½æ•° */
+    //                         (const char* )"Task_3",/* ä»»åŠ¡åå­— */
+    //                         (uint16_t )128, /* ä»»åŠ¡æ ˆå¤§å° 128å­—=128*4 Byte=512Byte=0.5KB */
+    //                         (void* )NULL, /* ä»»åŠ¡å…¥å£å‡½æ•°å‚æ•° */
+    //                         (UBaseType_t )27, /* ä»»åŠ¡çš„ä¼˜å…ˆçº§ */
+    //                         (TaskHandle_t* )&Task3_Handle);/* ä»»åŠ¡æ§åˆ¶å—æŒ‡é’ˆ */
     // configASSERT( xReturn );
     
 
 
-    vTaskDelete(AppTaskCreate_Handle); //É¾³ı AppTaskCreate ÈÎÎñ
+    vTaskDelete(AppTaskCreate_Handle); //åˆ é™¤ AppTaskCreate ä»»åŠ¡
 
-    taskEXIT_CRITICAL(); //ÍË³öÁÙ½çÇø  
+    taskEXIT_CRITICAL(); //é€€å‡ºä¸´ç•ŒåŒº  
 }
 
 
 
 
-float ADC_CH[3]={0}; // ¾Ö²¿±äÁ¿£¬ÓÃÓÚ±£´æ×ª»»¼ÆËãºóµÄµçÑ¹Öµ         
+float ADC_CH[3]={0}; // å±€éƒ¨å˜é‡ï¼Œç”¨äºä¿å­˜è½¬æ¢è®¡ç®—åçš„ç”µå‹å€¼         
 
-u16 ADC_X=0,ADC_Y=0;//Í¨µÀ1µÄ×ª»¯ºóµÄÖµ     SIOPÉ²³µĞÅºÅ Îª0É²³µ 1²»×÷Îª
+u16 ADC_X=0,ADC_Y=0;//é€šé“1çš„è½¬åŒ–åçš„å€¼     SIOPåˆ¹è½¦ä¿¡å· ä¸º0åˆ¹è½¦ 1ä¸ä½œä¸º
 
 unsigned char car_data=5;
 unsigned char STOP=1;
@@ -234,10 +234,10 @@ void Task_0( void * pvParameters )
     while(1)
     {
 
-        ADC_CH[0] = ( (float) AD_GetValue(ADC_Channel_8) ) / 4096*(float)3.3;//PB0 YÖá   <155Ç°½ø  >170ºóÍË
-        ADC_CH[1] = ( (float) AD_GetValue(ADC_Channel_9) ) / 4096*(float)3.3;//PB1 XÖá    <155ÓÒ×ª ×óÂÖ¼ÓËÙ ÓÒÂÖ¼õËÙ   >170×ó×ª ÓÒÂÖ¼ÓËÙ ×óÂÖ¼õËÙ    
-        ADC_Y=(ADC_CH[0]/1) * 100;// YÖáPB0  <155Ç°½ø  >170ºóÍË
-        ADC_X=(ADC_CH[1]/1) * 100;// XÖá PB1  <155ÓÒ×ª ×óÂÖ¼ÓËÙ ÓÒÂÖ¼õËÙ   >170×ó×ª ÓÒÂÖ¼ÓËÙ ×óÂÖ¼õËÙ    
+        ADC_CH[0] = ( (float) AD_GetValue(ADC_Channel_8) ) / 4096*(float)3.3;//PB0 Yè½´   <155å‰è¿›  >170åé€€
+        ADC_CH[1] = ( (float) AD_GetValue(ADC_Channel_9) ) / 4096*(float)3.3;//PB1 Xè½´    <155å³è½¬ å·¦è½®åŠ é€Ÿ å³è½®å‡é€Ÿ   >170å·¦è½¬ å³è½®åŠ é€Ÿ å·¦è½®å‡é€Ÿ    
+        ADC_Y=(ADC_CH[0]/1) * 100;// Yè½´PB0  <155å‰è¿›  >170åé€€
+        ADC_X=(ADC_CH[1]/1) * 100;// Xè½´ PB1  <155å³è½¬ å·¦è½®åŠ é€Ÿ å³è½®å‡é€Ÿ   >170å·¦è½¬ å³è½®åŠ é€Ÿ å·¦è½®å‡é€Ÿ    
 
         // LCD_ShowIntNum(23,65,ADC_Y,4,WHITE,BLUE,16);
         // LCD_ShowIntNum(73,65,ADC_X,4,WHITE,RED,16);
@@ -245,76 +245,76 @@ void Task_0( void * pvParameters )
         STOP=GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_10);   
         if(STOP==0)
         {                   
-            car_data=0;//¼È²»×óÓÒ×ª ÓÖ²»Ç°ºó×ß °üº¬É²³µ   
+            car_data=0;//æ—¢ä¸å·¦å³è½¬ åˆä¸å‰åèµ° åŒ…å«åˆ¹è½¦   
         }
         if(ADC_X<155)
         {
-            car_data=4;//ÓÒ×ª
+            car_data=4;//å³è½¬
         }
         if(ADC_X>170)
         {
-            car_data=3;//×ó×ª
+            car_data=3;//å·¦è½¬
         }
         if(ADC_Y>170)
         {
            
-            car_data=2;//ºóÍË
+            car_data=2;//åé€€
         }
         if(ADC_Y<155)
         {
-            // car_data=4;//ÓÒ×ª
-            car_data=1;//Ç°½ø
+            // car_data=4;//å³è½¬
+            car_data=1;//å‰è¿›
         }
         if((ADC_X>=155)&&(ADC_X<=170) && (ADC_Y>=155)&&(ADC_Y<=170)&&(STOP!=0))
         {
-            car_data=5;//¼È²»×óÓÒ×ª ÓÖ²»Ç°ºó×ß Ò²²»É²³µ ¾²Ö¹×´Ì¬  
+            car_data=5;//æ—¢ä¸å·¦å³è½¬ åˆä¸å‰åèµ° ä¹Ÿä¸åˆ¹è½¦ é™æ­¢çŠ¶æ€  
         }
 
         // memset(Tx_buf,0,32);
         switch ( car_data )
         {
-            case 0:// 0É²³µ
+            case 0:// 0åˆ¹è½¦
                 LCD_ShowString(45,5,"0-STOP!",WHITE,RED,16,0);
                 strcpy(Tx_buf,"0");
                 // Delay_ms(10);
                 // if(STOP==0) ++x;
                 break;
 
-            case 1://Ç°½ø
+            case 1://å‰è¿›
                 LCD_ShowString(45,5,"1-GoGo!",WHITE,BLUE,16,0);   
                 strcpy(Tx_buf,"1");
                 break;
 
-            case 2://ºóÍË
+            case 2://åé€€
                 LCD_ShowString(45,5,"2-Back!",BLACK,YELLOW,16,0); 
                 strcpy(Tx_buf,"2");
                 break;
 
-            case 3://×ó×ª
+            case 3://å·¦è½¬
                 LCD_ShowString(45,5,"3-LL->!",BLACK,GREEN,16,0); 
                 strcpy(Tx_buf,"3");
                 break;
 
-            case 4://ÓÒ×ª
+            case 4://å³è½¬
                 LCD_ShowString(45,5,"4-RR->!",BLACK,GREEN,16,0);  
                 strcpy(Tx_buf,"4");
 
                 break;
 
-            case 5://¾²Ö¹
+            case 5://é™æ­¢
                 LCD_ShowString(45,5,"5-Rest!",BLACK,WHITE,16,0);   
                 strcpy(Tx_buf,"5");
                 break;
 
         }
 
-        //---------------------ADC¼ì²â´¦Àí³ÌĞò------------------------ 
+        //---------------------ADCæ£€æµ‹å¤„ç†ç¨‹åº------------------------ 
                 
-        // tx_data[0]=car_data; //car_data´«¸ø³µµÄĞÅºÅ  1Ç°½ø  2ºóÍË  3×ó×ª 4ÓÒ×ª 0É²³µ() ÆäËû²¢²»×÷Îª
+        // tx_data[0]=car_data; //car_dataä¼ ç»™è½¦çš„ä¿¡å·  1å‰è¿›  2åé€€  3å·¦è½¬ 4å³è½¬ 0åˆ¹è½¦() å…¶ä»–å¹¶ä¸ä½œä¸º
         
 
 
-        vTaskDelay(10);//ÑÓÊ± 100¸ötick 100¸öÊ±ÖÓ½ÚÅÄ
+        vTaskDelay(10);//å»¶æ—¶ 100ä¸ªtick 100ä¸ªæ—¶é’ŸèŠ‚æ‹
     }
 
 
@@ -329,20 +329,13 @@ void Task_0( void * pvParameters )
  */
 void Task_1( void * pvParameters )
 {
-
 	while(1)
     {
-
         Send_String(Tx_buf);
         memset(Tx_buf,0,8);
         
-	   
         if (Get_Rx_Packge_State())
         {
-            // printf("Pitch:%s\n", Uart1_Rx[0]);
-            // printf("Roll:%s\n", Uart1_Rx[1]);
-            // printf("Temp:%sC\n", Uart1_Rx[2]);
-            // printf("Humi:%%%s\n", Uart1_Rx[3]);
             Get_RxPackge();
 			LCD_ShowString(50,25,Uart1_Rx[2],WHITE,BLACK,16,0);
 			LCD_ShowString(50,40,Uart1_Rx[3],WHITE,BLACK,16,0);
@@ -352,11 +345,7 @@ void Task_1( void * pvParameters )
             memset(Uart1_Rx,0,Rx_Count);
         }
 
-
-
-
-
-        vTaskDelay(10); //ÑÓÊ± s£¬Ò²¾ÍÊÇ 1000 ¸öÊ±ÖÓ½ÚÅÄ
+        vTaskDelay(10); //å»¶æ—¶ sï¼Œä¹Ÿå°±æ˜¯ 1000 ä¸ªæ—¶é’ŸèŠ‚æ‹
     }
 
   
@@ -378,7 +367,7 @@ void Task_2( void * pvParameters )
     while(1)
     {
 
-        vTaskDelay(100); //ÑÓÊ± 1s£¬Ò²¾ÍÊÇ 1000 ¸öÊ±ÖÓ½ÚÅÄ
+        vTaskDelay(100); //å»¶æ—¶ 1sï¼Œä¹Ÿå°±æ˜¯ 1000 ä¸ªæ—¶é’ŸèŠ‚æ‹
     }
 
 }
@@ -398,7 +387,7 @@ void Task_3( void * pvParameters )
     {
       
 
-        vTaskDelay(5); //ÑÓÊ± 1s£¬Ò²¾ÍÊÇ 1000 ¸öÊ±ÖÓ½ÚÅÄ
+        vTaskDelay(5); //å»¶æ—¶ 1sï¼Œä¹Ÿå°±æ˜¯ 1000 ä¸ªæ—¶é’ŸèŠ‚æ‹
     }
 
 }
